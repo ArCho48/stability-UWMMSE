@@ -187,9 +187,10 @@ def mainTrain():
             for batch in range(0,test_iter,batch_size):
                 batch_test_inputs = np.asarray(test_H[batch:batch+batch_size])
                 batch_test_inputs_ = batch_test_inputs + np.random.normal(0.0,0.0025,batch_test_inputs.shape) 
-                #pdb.set_trace()
                 start = time.time()
-                avg_rate, batch_rate1, batch_power, batch_rate, _, _ = model.eval( sess, inputs=batch_test_inputs, inputs_=batch_test_inputs)
+                
+                #### Replace batch_test_inputs_ with batch_test_inputs for evaluating on unperturbed inputs
+                avg_rate, batch_rate1, batch_power, batch_rate, _, _ = model.eval( sess, inputs=batch_test_inputs_, inputs_=batch_test_inputs)
                 #print(avg_rate);pdb.set_trace()
                 t += (time.time() - start)
                 test_rate += -avg_rate
@@ -208,7 +209,7 @@ def mainTrain():
             
             if not os.path.exists(resultPath):
                 os.makedirs(resultPath)
-            
+            #### Remove '_e' when evauating without perturbation
             if np.unique(test_sizes).shape[0] > 1:
                 mean_sum_rate, sizes = proc_res(sum_rate, test_sizes)
                 pdump( mean_sum_rate, resultPath+'wmmse_rate.pkl' )
@@ -216,10 +217,10 @@ def mainTrain():
             else:
                 mean_sum_rate = np.mean( sum_rate, axis=1 )
                 sum_rate = np.concatenate( sum_rate, axis=0 )
-                pdump( sum_rate, resultPath+'wmmse_rate.pkl' )
+                pdump( sum_rate, resultPath+'wmmse_rate_e.pkl' )
                 #pdump( fi, resultPath+'wmmse_fi.pkl' )
                 
-            pdump( power, resultPath+'wmmse_power.pkl' )
+            pdump( power, resultPath+'wmmse_power_e.pkl' )
         else:
             # Create model 
             model = create_model( sess, exp )
@@ -299,6 +300,8 @@ def mainTrain():
                 batch_test_inputs = np.asarray(test_H[batch:batch+batch_size])
                 batch_test_inputs_ = batch_test_inputs + np.random.normal(0.0,0.0025,batch_test_inputs.shape) 
                 start = time.time()
+                
+                #### Replace batch_test_inputs_ with batch_test_inputs for evaluating on unperturbed inputs
                 avg_rate, batch_rate1, batch_power, batch_rate, vv, aa, uu, ww = model.eval( sess, inputs=batch_test_inputs_, inputs_=batch_test_inputs)
                 vlist.append(vv)
                 ulist.append(uu)
@@ -311,10 +314,12 @@ def mainTrain():
                 sum_rate.append( batch_rate )
                 power.append( batch_power )
                 test_rate += -avg_rate
-            pdump(vlist,'vlist_e.pkl')
-            pdump(ulist,'ulist_e.pkl')
-            pdump(wlist,'wlist_e.pkl')
-            pdump(alist,'alist_e.pkl')
+            
+            #### Remove '_e' when evauating without perturbation
+            pdump(vlist,resultPath+'vlist_e.pkl')
+            pdump(ulist,resultPath+'ulist_e.pkl')
+            pdump(wlist,resultPath+'wlist_e.pkl')
+            pdump(alist,resultPath+'alist_e.pkl')
             test_rate /= test_iter
             test_rate *= batch_size
             
@@ -328,24 +333,17 @@ def mainTrain():
             if not os.path.exists(resultPath):
                 os.makedirs(resultPath)
             
-            #if np.unique(test_sizes).shape[0] > 1:
-                #mean_sum_rates, sizes = proc_res(sum_rate,test_sizes)
-                #pdump( mean_sum_rates, resultPath+'uwmmse_rate.pkl' )
-                #pdump( sizes, resultPath+'sizes.pkl' )
-            #else:
-                #mean_sum_rate = np.mean( sum_rate, axis=1 )
-                #sum_rate = np.concatenate( sum_rate, axis=0 )
-                #pdump( sum_rate, resultPath+'uwmmse_rate.pkl' )
-                ##pdump( fi, resultPath+'uwmmse_fi.pkl' )
+            if np.unique(test_sizes).shape[0] > 1:
+                mean_sum_rates, sizes = proc_res(sum_rate,test_sizes)
+                pdump( mean_sum_rates, resultPath+'uwmmse_rate.pkl' )
+                pdump( sizes, resultPath+'sizes.pkl' )
+            else:
+                mean_sum_rate = np.mean( sum_rate, axis=1 )
+                sum_rate = np.concatenate( sum_rate, axis=0 )
+                pdump( sum_rate, resultPath+'uwmmse_rate_e.pkl' )
+                #pdump( fi, resultPath+'uwmmse_fi.pkl' )
                 
-            #pdump( power, resultPath+'uwmmse_power.pkl' )
-        
-        #fig, ax = plt.subplots()
-        #ax.plot(range(nEpoch),test_rate_list)
-        #plt.xticks(range(nEpoch))
-        #ax.set_xlabel('Epochs')
-        #ax.set_ylabel('Test-set mean sum-rate')
-        #plt.show()
+            pdump( power, resultPath+'uwmmse_power_e.pkl' )
             
 if __name__ == "__main__":        
     import sys

@@ -1,4 +1,4 @@
-# UWMMSE-MIMO
+# UWMMSE-stability
 Tensorflow implementation of Stability Analysis of UWMMSE
 
 ## Overview

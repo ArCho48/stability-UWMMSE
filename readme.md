@@ -11,12 +11,12 @@ This library contains a Tensorflow implementation of the paper Stability Analysi
 * **matplotlib**
 
 ## Structure
-* [main](https://github.com/ArCho48/UWMMSE-MIMO/blob/master/main.py): Main code for generating dataset and training/evaluating UWMMSE model. Run as *python3 main.py* \[dataset ID\] \[exp ID\] \[mode\]. Eg., to train UWMMSE on dataset with ID set3, run *python3 main.py set3 uwmmse train*. Generates dataset with given ID if not already present.
-* [validate](https://github.com/ArCho48/UWMMSE-MIMO/blob/master/validate.py): Plot figures 1(a) \& 1(b) in the paper.
-* [model](https://github.com/ArCho48/UWMMSE-MIMO/blob/master/model.py): Defines the UWMMSE model.
-* [data](https://github.com/ArCho48/UWMMSE-MIMO/tree/master/data): should contain your dataset in folder {dataset ID}. 
-* [models](https://github.com/ArCho48/UWMMSE-MIMO/tree/master/models): Stores trained models in a folder with same name as {datset ID}.
-* [results](https://github.com/ArCho48/UWMMSE-MIMO/tree/master/results): Stores results in a folder with same name as {datset ID}.
+* [main](https://github.com/ArCho48/stability-UWMMSE/blob/main/main.py): Main code for generating dataset and training/evaluating UWMMSE model. Run as *python3 main.py* \[dataset ID\] \[exp ID\] \[mode\]. Eg., to train UWMMSE on dataset with ID set3, run *python3 main.py set3 uwmmse train*. Generates dataset with given ID if not already present.
+* [validate](https://github.com/ArCho48/stability-UWMMSE/blob/main/validate.py): Plot figures 1(a) \& 1(b) in the paper.
+* [model](https://github.com/ArCho48/stability-UWMMSE/blob/main/model.py): Defines the UWMMSE model.
+* [data](https://github.com/ArCho48/stability-UWMMSE/blob/main/data): should contain your dataset in folder {dataset ID}. 
+* [models](https://github.com/ArCho48/stability-UWMMSE/blob/main/models): Stores trained models in a folder with same name as {datset ID}.
+* [results](https://github.com/ArCho48/stability-UWMMSE/blob/main/results): Stores results in a folder with same name as {datset ID}.
 
 ## Usage
 

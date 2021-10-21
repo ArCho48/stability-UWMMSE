@@ -37,10 +37,10 @@ BibTeX format:
 @article{chowdhury2021stability,
   title={Stability Analysis of Unfolded WMMSE for Power Allocation},
   author={Chowdhury, Arindam and Gama, Fernando and Segarra, Santiago},
-  journal={arXiv e-prints},
-  pages={arXiv--2110},
+  journal={arXiv preprint arXiv:2110.07471},
   year={2021}
 }
+
 
 
 ```
